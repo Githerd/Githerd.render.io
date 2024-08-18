@@ -22,13 +22,16 @@ app.config['MAIL_USERNAME'] = os.getenv('EMAIL_USER')
 app.config['MAIL_PASSWORD'] = os.getenv('EMAIL_PASS')
 app.config['MAIL_DEFAULT_SENDER'] = os.getenv('EMAIL_USER')
 
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Flask Secret Key
 app.secret_key = os.getenv('SECRET_KEY', 'yumyumsugar_1')
 
 db = SQLAlchemy(app)
 mail = Mail(app)
+
 
 class ContactMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -37,12 +40,15 @@ class ContactMessage(db.Model):
     message = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
+
 with app.app_context():
     db.create_all()
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'auth.login'
+
 
 users = {}
 
@@ -57,6 +63,7 @@ class User(UserMixin):
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
+
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -74,7 +81,7 @@ def login():
             flash('Login successful!', 'success')
             return redirect(url_for('main.about'))
         flash('Invalid credentials, please try again.', 'error')
-    return render_template('main/login.html')
+    return render_template('login.html')  # Adjusted path
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -90,7 +97,7 @@ def register():
             users[username] = generate_password_hash(password)
             flash('Registration successful! Please login.', 'success')
             return redirect(url_for('auth.login'))
-    return render_template('main/register.html')
+    return render_template('register.html')  # Adjusted path
 
 @auth_bp.route('/logout', methods=['POST'])
 @login_required
@@ -101,21 +108,22 @@ def logout():
 
 app.register_blueprint(auth_bp)
 
+
 main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def about():
-    return render_template('main/about.html')
+    return render_template('about.html')  # Adjusted path
 
 @main_bp.route('/skills')
 def skills():
-    return render_template('main/skills.html')
+    return render_template('skills.html')  # Adjusted path
 
 @main_bp.route('/projects')
 def projects():
-    return render_template('main/projects.html')
+    return render_template('projects.html')  # Adjusted path
 
-# Contact Form Handling
+
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=2, max=100)])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -150,21 +158,21 @@ def contact():
     if request.method == 'POST' and not form.validate():
         flash('Please correct the errors in the form.', 'error')
 
-    return render_template('main/contact.html', form=form)
+    return render_template('contact.html', form=form)  # Adjusted path
 
 @main_bp.route('/balloon')
 def balloon():
-    return render_template('main/balloon.html')
+    return render_template('balloon.html')  # Adjusted path
 
 app.register_blueprint(main_bp)
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('main/404.html'), 404
+    return render_template('404.html'), 404  # Adjusted path
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template('main/500.html'), 500
+    return render_template('500.html'), 500  # Adjusted path
 
 if __name__ == '__main__':
     app.run(debug=True)
