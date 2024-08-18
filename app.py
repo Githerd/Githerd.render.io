@@ -167,4 +167,3 @@ def internal_server_error(e):
     return render_template('main/500.html'), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
