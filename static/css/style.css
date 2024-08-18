@@ -1,381 +1,307 @@
-/* Base Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+document.addEventListener("DOMContentLoaded", () => {
+    // Contact Form Submission
+    const contactForm = document.getElementById("contact-form");
+    const feedbackDiv = document.getElementById("feedback");
 
-/* Navbar Styles */
-.navbar {
-    background-color: #333;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 14px 0;
-    flex-wrap: wrap; /* Allow navbar items to wrap in small screens */
-}
+    if (contactForm) {
+        contactForm.addEventListener("submit", (event) => {
+            event.preventDefault();
 
-.navbar a {
-    color: white;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-    font-size: 17px;
-}
+            const formData = {
+                name: document.getElementById("name").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                message: document.getElementById("message").value.trim()
+            };
 
-.navbar a:hover {
-    background-color: #555;
-    color: white;
-}
+            if (!formData.name || !formData.email || !formData.message) {
+                feedbackDiv.textContent = "All fields are required.";
+                feedbackDiv.style.color = "red";
+                return;
+            }
 
-/* Logo Styles */
-.logo {
-    width: 150px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-/* Container Styles */
-.container {
-    padding: 20px;
-    background-color: #fff;
-    margin: 20px auto;
-    max-width: 800px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Main Content Area */
-main {
-    flex: 1;
-    display: grid;
-    place-items: center;
-    min-height: calc(100vh - 3rem);
-}
-
-/* Heading Styles */
-h1 {
-    color: #333;
-    text-align: center;
-    font-size: 2rem;
-}
-
-/* Flip Container Styles */
-.flip-container {
-    perspective: 1000px;
-    cursor: pointer;
-    width: 300px;
-    height: 200px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.flipper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-}
-
-.flip-container.flip .flipper {
-    transform: rotateY(180deg);
-}
-
-.front,
-.back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.front {
-    background-color: #f9f9f9;
-    z-index: 2;
-    transform: rotateY(0deg);
-}
-
-.back {
-    background-color: #eee;
-    transform: rotateY(180deg);
-}
-
-/* Footer Styles */
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #333;
-    color: white;
-    width: 100%;
-    margin-top: auto;
-}
-
-/* Form Styles */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-}
-
-form label {
-    margin-top: 10px;
-    font-weight: bold;
-    color: #333;
-}
-
-form input,
-form textarea {
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-input[type="submit"],
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-input[type="submit"]:hover,
-button:hover {
-    background-color: #555;
-}
-
-/* Balloon Animation */
-.balloon {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    color: #ff0000;
-    animation: float 5s linear infinite;
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-200px);
-    }
-}
-
-/* Sun and Orbit Styles */
-#sun {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 80px;
-    height: 80px;
-    background-color: #ffcc00;
-    border-radius: 50%;
-    margin: 0;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-}
-
-.orbit {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px dashed #ccc;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: orbit 10s linear infinite;
-}
-
-/*  orbit sizes */
-.orbit-1 {
-    width: 150px;
-    height: 150px;
-}
-
-.orbit-2 {
-    width: 200px;
-    height: 200px;
-}
-
-.orbit-3 {
-    width: 250px;
-    height: 250px;
-}
-
-@keyframes orbit {
-    from {
-        transform: rotate(0deg) translateX(75px) rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg) translateX(75px) rotate(-360deg);
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .navbar a {
-        font-size: 16px;
-        padding: 10px 15px;
+            axios.post(contactForm.action, formData)
+                .then(response => {
+                    feedbackDiv.textContent = "Your message has been sent successfully!";
+                    feedbackDiv.style.color = "green";
+                    contactForm.reset();
+                })
+                .catch(error => {
+                    feedbackDiv.textContent = `Failed to send message: ${error.response?.data?.error || error.message}`;
+                    feedbackDiv.style.color = "red";
+                });
+        });
     }
 
-    h1 {
-        font-size: 1.75rem;
+    // Initialize flip effects
+    initializeFlipEffects();
+
+    // Login Form Submission
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(loginForm);
+            const loginUrl = "{{ url_for('auth.login') }}";
+
+            fetch(loginUrl, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "{{ url_for('main.home') }}";
+                } else {
+                    alert('Login failed!');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
     }
 
-    .container {
-        padding: 15px;
-        margin: 15px auto;
+    // Color changing and project display logic
+    const btn = document.getElementById("btn");
+    const colorSpan = document.querySelector(".color");
+    const projectDisplay = document.getElementById('project-display');
+
+    if (btn && projectDisplay) {
+        const projects = [
+            {
+                title: "Project One",
+                description: "A comedy website using HTML and CSS",
+                technologies: "Git, Github, HTML and CSS",
+                link: "https://Githerd.github.io.git"
+            },
+            {
+                title: "Project Two",
+                description: "A comedy website using HTML, CSS, and Javascript",
+                technologies: "Git, Github, HTML, CSS, and JavaScript",
+                link: "https://Githerd.javascript.io.git"
+            },
+             {
+                title: "Project Three",
+                description: "A comedy website using HTML, CSS, Javascript, and Flask",
+                technologies: "Git, Visual Studio Code, Render, Github, HTML, CSS, Javascript, and Flask",
+                link: "https://Githerd.render.io.git"
+            }
+        ];
+
+        let currentProjectIndex = 0;
+
+        function displayProject(index) {
+            const project = projects[index];
+            projectDisplay.innerHTML = `
+                <h2>${project.title}</h2>
+                <p><strong>Description:</strong> ${project.description}</p>
+                <p><strong>Technologies:</strong> ${project.technologies}</p>
+                <a href="${project.link}" target="_blank">View Project</a>
+            `;
+        }
+
+        function getRandomColor() {
+            const randomIndex = Math.floor(Math.random() * colors.length);
+            return colors[randomIndex];
+        }
+
+        btn.addEventListener("click", () => {
+            const randomColor = getRandomColor();
+            document.body.style.backgroundColor = randomColor;
+            if (colorSpan) {
+                colorSpan.textContent = randomColor;
+            }
+
+            currentProjectIndex = (currentProjectIndex + 1) % projects.length;
+            displayProject(currentProjectIndex);
+        });
+
+        displayProject(currentProjectIndex);
+
+        const initialColor = getRandomColor();
+        document.body.style.backgroundColor = initialColor;
+        if (colorSpan) {
+            colorSpan.textContent = initialColor;
+        }
     }
 
-    .flip-container {
-        width: 250px;
-        height: 170px;
+    // Register Form Submission
+    const registerForm = document.getElementById("register-form");
+
+    if (registerForm) {
+        const getButton = document.createElement("button");
+        getButton.textContent = "Fetch Users (GET)";
+        document.body.appendChild(getButton);
+
+        getButton.addEventListener("click", () => {
+            axios
+                .get("https://reqres.in/api/users?page=2")
+                .then((response) => {
+                    feedbackDiv.textContent = `Fetched Users: ${JSON.stringify(response.data)}`;
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    feedbackDiv.textContent = `Error Fetching Users: ${error.message}`;
+                    console.error(error);
+                });
+        });
+
+        registerForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const formData = {
+                username: document.getElementById("username").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value,
+                confirmPassword: document.getElementById("confirm-password").value
+            };
+
+            if (formData.password !== formData.confirmPassword) {
+                feedbackDiv.textContent = "Passwords do not match!";
+                feedbackDiv.style.color = "red";
+                return;
+            }
+
+            axios
+                .post("https://reqres.in/api/register", {
+                    email: formData.email,
+                    password: formData.password,
+                })
+                .then((response) => {
+                    feedbackDiv.textContent = `Registration Successful! ${JSON.stringify(response.data)}`;
+                    feedbackDiv.style.color = "green";
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    feedbackDiv.textContent = `Registration Failed! ${error.response?.data?.error || error.message}`;
+                    feedbackDiv.style.color = "red";
+                    console.error(error);
+                });
+        });
+
+        const postButton = document.createElement("button");
+        postButton.textContent = "Simulate Registration (POST)";
+        document.body.appendChild(postButton);
+
+        postButton.addEventListener("click", () => {
+            axios
+                .post("https://reqres.in/api/register", {
+                    email: "eve.holt@reqres.in",
+                    password: "pistol",
+                })
+                .then((response) => {
+                    feedbackDiv.textContent = `Simulated Registration Successful! ${JSON.stringify(response.data)}`;
+                    feedbackDiv.style.color = "green";
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    feedbackDiv.textContent = `Simulated Registration Failed! ${error.response?.data?.error || error.message}`;
+                    feedbackDiv.style.color = "red";
+                    console.error(error);
+                });
+        });
     }
 
-    form input,
-    form textarea,
-    button {
-        max-width: 100%;
+    // Sun and Orbits Animation
+    const sun = document.getElementById('sun');
+    if (sun) {
+        console.log("Sun element found:", sun);
+    } else {
+        console.error("Sun element not found!");
     }
 
-    .orbit-1, .orbit-5 {
-        width: 130px;
-        height: 130px;
+    const orbits = document.querySelectorAll('.orbit');
+    if (orbits.length > 0) {
+        console.log("Orbits found:", orbits.length);
+    } else {
+        console.error("No orbits found!");
     }
 
-    .orbit-2, .orbit-6 {
-        width: 180px;
-        height: 180px;
+    orbits.forEach((orbit, index) => {
+        console.log(`Setting animation delay for orbit ${index + 1}`);
+        orbit.style.animationDelay = `${index * 2}s`;
+    });
+
+    // Form Submission Balloon Animation
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            balloon.textContent = '🎈';
+            document.body.appendChild(balloon);
+
+            const submitButton = form.querySelector('input[type="submit"], button[type="submit"]');
+            const rect = submitButton.getBoundingClientRect();
+            balloon.style.left = `${rect.left + window.scrollX}px`;
+            balloon.style.top = `${rect.top + window.scrollY}px`;
+
+            setTimeout(() => {
+                balloon.remove();
+            }, 5000);
+        });
     }
 
-    .orbit-3, .orbit-7 {
-        width: 220px;
-        height: 220px;
+    // Back to Top Button Logic
+    const backToTopBtn = document.getElementById("back-to-top");
+
+    if (backToTopBtn) {
+        backToTopBtn.style.position = "fixed";
+        backToTopBtn.style.bottom = "20px";
+        backToTopBtn.style.left = "20px";  // Adjusting to the left
+
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        });
     }
+
+    // Show or hide the back-to-top button on load
+    if (backToTopBtn) {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = "block";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    }
+});
+
+// Flip Effects Initialization Function
+function initializeFlipEffects() {
+    const flipContainers = document.querySelectorAll('.flip-container');
+
+    flipContainers.forEach(container => {
+        container.addEventListener('click', () => {
+            container.classList.toggle('flip');
+        });
+    });
 }
 
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
+// Background Color Change Function
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
     }
-
-    .navbar a {
-        font-size: 15px;
-        padding: 10px 15px;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    .flip-container-wrapper {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .flip-container {
-        width: 220px;
-        height: 140px;
-    }
-
-    .container {
-        margin: 10px;
-        padding: 10px;
-    }
+    return color;
 }
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.25rem;
-    }
+function changeBackgroundColor() {
+    document.body.style.backgroundColor = getRandomColor();
 
-    .navbar a {
-        font-size: 14px;
-        padding: 8px 10px;
-    }
+    const randomInterval = Math.floor(Math.random() * 4000) + 1000;
 
-    .balloon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-
-    .flip-container {
-        width: 200px;
-        height: 120px;
-    }
-
-    .orbit-1, .orbit-5 {
-        width: 100px;
-        height: 100px;
-    }
-
-    .orbit-2, .orbit-6 {
-        width: 150px;
-        height: 150px;
-    }
-
-    .orbit-3, .orbit-7 {
-        width: 200px;
-        height: 200px;
-    }
-
-    form {
-        padding: 0 10px;
-    }
-
-    /* Move Sun and Orbits Lower */
-    #sun, .orbit {
-        top: 70%; /* Adjust the top value to move the sun and orbits lower */
-    }
+    setTimeout(changeBackgroundColor, randomInterval);
 }
 
-/* Back to Top Button Styles */
-#back-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px; /* Position to the right */
-    padding: 5px 10px;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    z-index: 1000;
-}
-
-#back-to-top:hover {
-    background-color: #555;
-}
+window.onload = function() {
+    changeBackgroundColor();
+};
